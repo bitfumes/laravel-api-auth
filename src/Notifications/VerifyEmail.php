@@ -65,7 +65,7 @@ class VerifyEmail extends Notification implements ShouldQueue
         $verify_url  = app()['config']['api-auth.verify_url'];
         $sign        = str_random(40);
         Cache::put("verify-{$notifiable->id}", $sign, Carbon::now()->addMinute(5));
-        return "{$front_url}/{$verify_url}/?user={$notifiable->getKey()}&signature={$sign}";
+        return "{$front_url}/{$verify_url}?user={$notifiable->getKey()}&signature={$sign}";
     }
 
     /**
