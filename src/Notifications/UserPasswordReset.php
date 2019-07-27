@@ -57,11 +57,13 @@ class UserPasswordReset extends Notification implements ShouldQueue
         if (static::$toMailCallback) {
             return call_user_func(static::$toMailCallback, $notifiable, $this->token);
         }
+        $front_url  = app()['config']['api-auth.front_url'];
+        $reset_url  = app()['config']['api-auth.verify_url'];
 
         return (new MailMessage())
             ->subject(Lang::getFromJson('Reset Password Notification'))
             ->line(Lang::getFromJson('You are receiving this email because we received a password reset request for your account.'))
-            ->action('Reset Password', app()['config']['api-auth.front_url'] . '/settings/password/reset?token=' . $this->token)
+            ->action('Reset Password', "{$front_url}/{$reset_url}?token={$this->token}")
             ->line(Lang::getFromJson('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
             ->line(Lang::getFromJson('If you did not request a password reset, no further action is required.'));
     }

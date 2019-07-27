@@ -20,7 +20,7 @@ class ResetPasswordTest extends TestCase
     {
         Notification::fake();
         $user = factory(User::class)->create();
-        $res  = $this->post(route('user.password.email'), ['email' => $user->email])->assertStatus(202);
+        $res  = $this->postJson(route('user.password.email'), ['email' => $user->email])->assertStatus(202);
         Notification::assertSentTo([$user], UserPasswordReset::class);
     }
 
