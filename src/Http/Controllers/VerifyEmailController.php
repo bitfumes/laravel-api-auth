@@ -3,14 +3,14 @@
 namespace Bitfumes\ApiAuth\Http\Controllers;
 
 use Illuminate\Support\Facades\Mail;
-use Bitfumes\ApiAuth\Mail\WelcomeEmail;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifyEmailController extends AuthController
 {
     public function __construct()
     {
-        $this->user = app()['config']['api-auth.models.user'];
+        $this->user          = app()['config']['api-auth.models.user'];
+        $this->welcome_email = app()['config']['api-auth.welcome_email'];
     }
 
     /**
@@ -36,7 +36,7 @@ class VerifyEmailController extends AuthController
         }
         if ($this->checkVerifySignature($user)) {
             $user->markEmailAsVerified();
-            Mail::to($user->email)->send(new WelcomeEmail($user, null));
+            Mail::to($user->email)->send(new $this->welcome_email($user, null));
             return $this->respondWithToken(auth()->login($user));
         }
         return response('Credential not found or please try to login & resend email.', Response::HTTP_NOT_ACCEPTABLE);

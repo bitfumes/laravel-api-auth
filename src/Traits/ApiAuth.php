@@ -2,9 +2,6 @@
 
 namespace Bitfumes\ApiAuth\Traits;
 
-use Bitfumes\ApiAuth\Notifications\VerifyEmail;
-use Bitfumes\ApiAuth\Notifications\UserPasswordReset;
-
 trait ApiAuth
 {
     /**
@@ -14,7 +11,8 @@ trait ApiAuth
      */
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmail());
+        $verify = app()['config']['api-auth.notifications.verify'];
+        $this->notify(new $verify());
     }
 
     /**
@@ -25,7 +23,8 @@ trait ApiAuth
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new UserPasswordReset($token));
+        $reset_notification = app()['config']['api-auth.notifications.reset'];
+        $this->notify(new $reset_notification($token));
     }
 
     /**
