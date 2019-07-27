@@ -64,7 +64,7 @@ class ApiAuthServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/ApiAuth.php' => config_path('ApiAuth.php'),
+                __DIR__ . '/../config/ApiAuth.php' => config_path('api-auth.php'),
             ], 'config');
         }
     }
