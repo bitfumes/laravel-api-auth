@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name'     => 'required|min:3|max:25',
-            'email'    => 'required|unique:users|email',
+            'email'   => 'required|email|unique:users,email,' . auth()->id(),
         ];
     }
 }
