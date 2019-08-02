@@ -47,20 +47,25 @@ class AuthController extends Controller
 
     protected function checkForAvatar($request)
     {
-        if ($request->avatar) {
+        preg_match('/^data:(.*);base64/i', $request->avatar, $match);
+
+        if (count($match) > 0) {
             $height   = config('api-auth.avatar.thumb_height');
             $width    = config('api-auth.avatar.thumb_width');
             $path     = config('api-auth.avatar.path');
             $disk     = config('api-auth.avatar.disk');
             $filename = Str::random();
-            $image    = base64_decode($request->avatar);
+
+            $ImageToLoad  = str_replace('data:image/jpg;base64,', '', $request->avatar);
+            $ImageToLoad  = str_replace('data:image/png;base64,', '', $ImageToLoad);
+            $image        = base64_decode($ImageToLoad);
 
             $this->removeOldAvatar();
 
             Storage::disk($disk)->put("{$path}/{$filename}.jpg", $image);
 
-            $im    = imagecreatefromstring($image);
-            $thumb = ImageCrop::crop($im, $width, $height);
+            $im          = imagecreatefromstring($image);
+            $thumb       = ImageCrop::crop($im, $width, $height);
             Storage::disk($disk)->put("{$path}/{$filename}_thumb.jpg", $thumb);
             ImageCrop::clearnUp($im);
 
@@ -96,11 +101,12 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        $userResource = config('api-auth.resources.user');
         return response()->json([
             'access_token' => $token,
             'token_type'   => 'bearer',
             'expires_in'   => auth('api')->factory()->getTTL() * 60,
-            'user'         => auth('api')->user(),
+            'user'         => new $userResource(auth('api')->user()),
         ]);
     }
 
