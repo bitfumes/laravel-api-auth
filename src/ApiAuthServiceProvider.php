@@ -17,7 +17,7 @@ class ApiAuthServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/ApiAuth.php', 'api-auth');
         $this->publishThings();
         $this->loadViewsFrom(__DIR__ . '/Views', 'api-auth');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->registerRoutes();
     }
 

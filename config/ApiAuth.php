@@ -15,4 +15,10 @@ return [
         'reset'  => Bitfumes\ApiAuth\Notifications\UserPasswordReset::class,
         'verify' => Bitfumes\ApiAuth\Notifications\VerifyEmail::class,
     ],
+    'avatar' => [
+        'disk'         => 'public',
+        'path'         => 'avatar',
+        'thumb_width'  => 25,
+        'thumb_height' => 25,
+    ],
 ];

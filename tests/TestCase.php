@@ -3,6 +3,7 @@
 namespace Bitfumes\ApiAuth\Tests;
 
 use Bitfumes\ApiAuth\ApiAuthServiceProvider;
+use Intervention\Image\ImageServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tymon\JWTAuth\Providers\LaravelServiceProvider;
 
@@ -14,6 +15,7 @@ class TestCase extends BaseTestCase
         $this->withoutExceptionHandling();
         $this->artisan('migrate', ['--database' => 'testing']);
         app()->register(LaravelServiceProvider::class); // register tymon package
+        app()->register(ImageServiceProvider::class); // register tymon package
         $this->loadMigrations();
         $this->loadFactories();
     }
@@ -26,9 +28,9 @@ class TestCase extends BaseTestCase
 
     protected function loadMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../src/database/migrations');
         $this->loadLaravelMigrations(['--database' => 'testing']); // package migrations
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations'); // test migrations
+        $this->loadMigrationsFrom(__DIR__ . '/../src/database/migrations');
     }
 
     protected function getEnvironmentSetUp($app)

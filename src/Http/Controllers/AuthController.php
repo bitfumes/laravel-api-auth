@@ -2,8 +2,11 @@
 
 namespace Bitfumes\ApiAuth\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Routing\Controller;
 use App\Http\Resources\UserResource;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Bitfumes\ApiAuth\Http\Requests\UpdateRequest;
 use Bitfumes\ApiAuth\Http\Requests\RegisterRequest;
@@ -35,10 +38,41 @@ class AuthController extends Controller
     public function update(UpdateRequest $request)
     {
         $user = auth()->user();
+        $this->checkForAvatar($request);
         $user->update($request->all());
         return response([
             'data'=> new $this->resource($user),
         ], Response::HTTP_ACCEPTED);
+    }
+
+    protected function checkForAvatar($request)
+    {
+        if ($request->avatar) {
+            $height   = config('api-auth.avatar.thumb_height');
+            $width    = config('api-auth.avatar.thumb_width');
+            $path     = config('api-auth.avatar.path');
+            $disk     = config('api-auth.avatar.disk');
+            $filename = Str::random();
+
+            $this->removeOldAvatar();
+
+            $avatar    = Image::make($request->avatar);
+            Storage::disk($disk)->put("{$path}/{$filename}.jpg", $avatar->response());
+
+            $thumb     = $avatar->resize($width, $height);
+            Storage::disk($disk)->put("{$path}/{$filename}_thumb.jpg", $thumb->response());
+
+            unset($request['avatar']);
+            $request['avatar'] = "{$path}/{$filename}";
+        }
+    }
+
+    protected function removeOldAvatar()
+    {
+        $user     = auth()->user();
+        $disk     = config('api-auth.avatar.disk');
+        Storage::disk($disk)->delete("{$user->avatar}.jpg");
+        Storage::disk($disk)->delete("{$user->avatar}_thumb.jpg");
     }
 
     /**

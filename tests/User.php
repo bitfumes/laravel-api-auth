@@ -25,7 +25,7 @@ class User extends Authenticatable implements HasApiAuth
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar',
     ];
 
     /**

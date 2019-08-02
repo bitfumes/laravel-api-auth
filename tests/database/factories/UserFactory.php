@@ -17,10 +17,11 @@ use Bitfumes\ApiAuth\Tests\User;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name'              => $faker->name,
-        'email'             => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password'          => 'secret123', // secret
-        'remember_token'    => str_random(10),
+        'name'                   => $faker->name,
+        'email'                  => $faker->unique()->safeEmail,
+        'email_verified_at'      => now(),
+        'avatar'                 => $faker->imageUrl(),
+        'password'               => 'secret123', // secret
+        'remember_token'         => str_random(10),
     ];
 });

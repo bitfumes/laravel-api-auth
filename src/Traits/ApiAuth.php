@@ -4,6 +4,13 @@ namespace Bitfumes\ApiAuth\Traits;
 
 trait ApiAuth
 {
+    public static function bootApiAuth() : void
+    {
+        static::retrieved(function ($model) {
+            $model->fillable = array_merge($model->fillable, ['avatar']);
+        });
+    }
+
     /**
      * Send the email verification notification.
      *

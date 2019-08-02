@@ -14,6 +14,8 @@ Write a few lines about the usage of this package.
 
 # Add Contract
 
+# add avatar field to migration
+
 # Add Trait
 
 # Add queue driver
