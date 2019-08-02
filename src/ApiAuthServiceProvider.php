@@ -66,6 +66,10 @@ class ApiAuthServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/ApiAuth.php' => config_path('api-auth.php'),
             ], 'config');
+
+            $this->publishes([
+                __DIR__ . '/database/migrations/' => database_path('migrations'),
+            ], 'api-auth:migrations');
         }
     }
 }

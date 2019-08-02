@@ -16,6 +16,8 @@ Write a few lines about the usage of this package.
 
 # add avatar field to migration
 
+# run php artisan migrate
+
 # Add Trait
 
 # Add queue driver
