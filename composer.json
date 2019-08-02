@@ -10,7 +10,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "intervention/image": "^2.5",
         "tymon/jwt-auth": "1.0.0-rc.4"
     },
     "require-dev": {

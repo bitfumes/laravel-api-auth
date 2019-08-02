@@ -5,7 +5,7 @@ namespace Bitfumes\ApiAuth\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Controller;
 use App\Http\Resources\UserResource;
-use Intervention\Image\Facades\Image;
+use Bitfumes\ApiAuth\Helpers\ImageCrop;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Bitfumes\ApiAuth\Http\Requests\UpdateRequest;
@@ -53,14 +53,16 @@ class AuthController extends Controller
             $path     = config('api-auth.avatar.path');
             $disk     = config('api-auth.avatar.disk');
             $filename = Str::random();
+            $image    = base64_decode($request->avatar);
 
             $this->removeOldAvatar();
 
-            $avatar    = Image::make($request->avatar);
-            Storage::disk($disk)->put("{$path}/{$filename}.jpg", $avatar->response());
+            Storage::disk($disk)->put("{$path}/{$filename}.jpg", $image);
 
-            $thumb     = $avatar->resize($width, $height);
-            Storage::disk($disk)->put("{$path}/{$filename}_thumb.jpg", $thumb->response());
+            $im    = imagecreatefromstring($image);
+            $thumb = ImageCrop::crop($im, $width, $height);
+            Storage::disk($disk)->put("{$path}/{$filename}_thumb.jpg", $thumb);
+            ImageCrop::clearnUp($im);
 
             unset($request['avatar']);
             $request['avatar'] = "{$path}/{$filename}";

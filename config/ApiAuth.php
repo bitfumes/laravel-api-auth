@@ -18,7 +18,7 @@ return [
     'avatar' => [
         'disk'         => 'public',
         'path'         => 'avatar',
-        'thumb_width'  => 25,
-        'thumb_height' => 25,
+        'thumb_width'  => 50,
+        'thumb_height' => 50,
     ],
 ];

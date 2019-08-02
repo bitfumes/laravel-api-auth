@@ -63,6 +63,6 @@ class AvatarTest extends TestCase
     protected function createBase64Image()
     {
         $image = \Illuminate\Http\Testing\File::image('image.jpg');
-        return 'data:image/png;base64,' . base64_encode(file_get_contents($image));
+        return base64_encode(file_get_contents($image));
     }
 }
