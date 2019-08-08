@@ -12,7 +12,11 @@
 
 Write a few lines about the usage of this package.
 
-# Add Contract
+# Add Contract hasApiAuth and JWTSubject
+
+# config auth.php
+
+# sec password atribute
 
 # add avatar field to migration
 
