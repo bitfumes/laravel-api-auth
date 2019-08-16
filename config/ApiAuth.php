@@ -7,18 +7,18 @@ return [
     'resources' => [
         'user' => Bitfumes\ApiAuth\Http\Resources\UserResource::class,
     ],
-    'front_url'          => 'http://localhost:3000',
-    'reset_url'          => 'password/reset',
-    'verify_url'         => 'email/verify',
+    'front_url'          => env('FRONT_URL', 'http://localhost:3000'),
+    'reset_url'          => env('API_AUTH_RESET_URL', 'password/reset'),
+    'verify_url'         => env('API_AUTH_VERIFY_URL', 'email/verify'),
     'welcome_email'      => Bitfumes\ApiAuth\Mail\WelcomeEmail::class,
     'notifications'      => [
         'reset'  => Bitfumes\ApiAuth\Notifications\UserPasswordReset::class,
         'verify' => Bitfumes\ApiAuth\Notifications\VerifyEmail::class,
     ],
     'avatar' => [
-        'disk'         => 'public',
-        'path'         => 'avatar',
-        'thumb_width'  => 50,
-        'thumb_height' => 50,
+        'disk'         => env('API_AUTH_AVATAR_DISK', 'public'),
+        'path'         => env('API_AUTH_AVATAR_PATH', 'avatar'),
+        'thumb_width'  => env('API_AUTH_AVATAR_WIDTH', 50),
+        'thumb_height' => env('API_AUTH_AVATAR_HEIGHT', 50),
     ],
 ];

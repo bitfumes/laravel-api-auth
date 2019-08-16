@@ -37,6 +37,7 @@ class TestCase extends BaseTestCase
         $app['config']->set('jwt.secret', 'abcdef');
 
         $app['config']->set('auth.guards.api.driver', 'jwt');
+        $app['config']->set('auth.defaults.guard', 'api');
         $app['config']->set('auth.providers.users.model', User::class);
 
         $app['config']->set('app.key', 'AckfSECXIvnK5r28GVIWUAxmbBSjTsmF');

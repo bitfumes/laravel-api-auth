@@ -3,13 +3,15 @@
 namespace Bitfumes\ApiAuth\Tests;
 
 use Bitfumes\ApiAuth\Traits\ApiAuth;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Bitfumes\ApiAuth\Contract\HasApiAuth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements HasApiAuth
+class User extends Authenticatable implements HasApiAuth, JWTSubject
 {
-    use Notifiable, ApiAuth;
+    use Notifiable;
+    use ApiAuth;
 
     /**
      * @param $value
