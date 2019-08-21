@@ -2,6 +2,10 @@
 
 namespace Bitfumes\ApiAuth\Http\Controllers;
 
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Bitfumes\ApiAuth\SocialProfile;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialProfileController extends AuthController
