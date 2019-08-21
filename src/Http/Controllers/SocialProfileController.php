@@ -49,7 +49,7 @@ class SocialProfileController extends AuthController
         $social   = $this->checkSocialProfile($details);
         $user     = $social ? $this->user::find($social->user_id) :
                                 $this->createSocialProfile($details, $service);
-
+        auth()->login($user);
         $token    = auth()->tokenById($user->id);
         return $this->respondWithToken($token);
     }
