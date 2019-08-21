@@ -2,6 +2,7 @@
 
 namespace Bitfumes\ApiAuth\Tests;
 
+use Bitfumes\ApiAuth\SocialProfile;
 use Bitfumes\ApiAuth\ApiAuthServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tymon\JWTAuth\Providers\LaravelServiceProvider;
@@ -57,6 +58,11 @@ class TestCase extends BaseTestCase
     public function createUser($args = [], $num=null)
     {
         return factory(User::class, $num)->create($args);
+    }
+
+    public function createSocial($args = [], $num=null)
+    {
+        return factory(SocialProfile::class, $num)->create($args);
     }
 
     public function authUser()

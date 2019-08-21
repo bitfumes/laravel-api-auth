@@ -14,3 +14,7 @@ Route::post('/email/verify/{id}', 'VerifyEmailController@verifyEmail')->name('ve
 Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('user.password.email');
 Route::post('/password/reset', 'ResetPasswordController@reset')->name('user.password.request');
 Route::post('/password/update', 'ResetPasswordController@updatePassword')->name('user.password.update');
+
+// Social Login
+Route::post('social-login/{service}', 'SocialProfileController@redirectToProvider');
+Route::post('social-login/{service}/callback', 'SocialProfileController@handleProviderCallback')->name('loginCallback');

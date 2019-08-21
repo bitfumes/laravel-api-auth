@@ -2,6 +2,8 @@
 
 namespace Bitfumes\ApiAuth\Traits;
 
+use Bitfumes\ApiAuth\SocialProfile;
+
 trait ApiAuth
 {
     public static function bootApiAuth() : void
@@ -52,5 +54,13 @@ trait ApiAuth
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    */
+    public function social()
+    {
+        return $this->hasMany(SocialProfile::class);
     }
 }
