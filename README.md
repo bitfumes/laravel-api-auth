@@ -10,19 +10,17 @@
 
 ## Usage
 
-Write a few lines about the usage of this package.
-
 # Add Contract hasApiAuth and JWTSubject
 
 # config auth.php
 
-# sec password atribute
+# set password attribute
 
 # add avatar field to migration
 
 # run php artisan migrate
 
-# Add Trait
+# Add Trait ApiAuth
 
 # Add queue driver
 

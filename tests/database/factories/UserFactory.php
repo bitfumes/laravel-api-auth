@@ -1,6 +1,6 @@
-
 <?php
 
+use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Bitfumes\ApiAuth\Tests\User;
 
@@ -22,6 +22,6 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at'      => now(),
         'avatar'                 => $faker->imageUrl(),
         'password'               => 'secret123', // secret
-        'remember_token'         => str_random(10),
+        'remember_token'         => Str::random(10),
     ];
 });
