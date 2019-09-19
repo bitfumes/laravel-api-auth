@@ -3,6 +3,7 @@
 namespace Bitfumes\ApiAuth\Notifications;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Notifications\Notification;
@@ -62,7 +63,7 @@ class VerifyEmail extends Notification implements ShouldQueue
     {
         $front_url   = app()['config']['api-auth.front_url'];
         $verify_url  = app()['config']['api-auth.verify_url'];
-        $sign        = str_random(40);
+        $sign        = Str::random(40);
         Cache::put("verify-{$notifiable->id}", $sign, Carbon::now()->addMinute(5));
         return "{$front_url}/{$verify_url}?user={$notifiable->getKey()}&signature={$sign}";
     }
