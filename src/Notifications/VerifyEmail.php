@@ -4,7 +4,6 @@ namespace Bitfumes\ApiAuth\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -44,13 +43,13 @@ class VerifyEmail extends Notification implements ShouldQueue
         }
 
         return (new MailMessage())
-            ->subject(Lang::getFromJson('Verify Email Address'))
-            ->line(Lang::getFromJson('Please click the button below to verify your email address.'))
+            ->subject('Verify Email Address')
+            ->line('Please click the button below to verify your email address.')
             ->action(
-                Lang::getFromJson('Verify Email Address'),
+                ('Verify Email Address'),
                 $this->verificationUrl($notifiable)
             )
-            ->line(Lang::getFromJson('If you did not create an account, no further action is required.'));
+            ->line('If you did not create an account, no further action is required.');
     }
 
     /**

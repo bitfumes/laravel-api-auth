@@ -3,6 +3,14 @@
   "description": "Your Package Description here",
   "type": "library",
   "license": "MIT",
+  "keywords": [
+    "laravel multiauth",
+    "api auth",
+    "bitfumes",
+    "api auth",
+    "jwt auth",
+    "auth for api"
+  ],
   "authors": [
     {
       "name": "sarthaksavvy",

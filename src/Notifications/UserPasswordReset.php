@@ -3,7 +3,6 @@
 namespace Bitfumes\ApiAuth\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -61,11 +60,11 @@ class UserPasswordReset extends Notification implements ShouldQueue
         $reset_url   = app()['config']['api-auth.reset_url'];
 
         return (new MailMessage())
-            ->subject(Lang::getFromJson('Reset Password Notification'))
-            ->line(Lang::getFromJson('You are receiving this email because we received a password reset request for your account.'))
+            ->subject('Reset Password Notification')
+            ->line('You are receiving this email because we received a password reset request for your account.')
             ->action('Reset Password', "{$front_url}/{$reset_url}?token={$this->token}")
-            ->line(Lang::getFromJson('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
-            ->line(Lang::getFromJson('If you did not request a password reset, no further action is required.'));
+            ->line('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')])
+            ->line('If you did not request a password reset, no further action is required.');
     }
 
     /**
