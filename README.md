@@ -1,8 +1,9 @@
 # api-auth
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Travis](https://img.shields.io/travis/bitfumes/api-auth.svg?style=flat-square)]()
+[![GitHub issues](https://img.shields.io/github/issues/bitfumes/laravel-api-auth)](https://github.com/bitfumes/laravel-api-auth/issues)
 [![Total Downloads](https://img.shields.io/packagist/dt/bitfumes/api-auth.svg?style=flat-square)](https://packagist.org/packages/bitfumes/api-auth)
+[![Build Status](https://travis-ci.org/bitfumes/laravel-api-auth.svg?branch=master)](https://travis-ci.org/bitfumes/laravel-api-auth)
 
 # Install
 
