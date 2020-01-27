@@ -10,6 +10,9 @@ Tweet About it
 @endcomponent
 
 # Setting
+@if($password)
+Your current password is <b>{{$password}}</b> <br/>
+@endif
 You can change password, go to profile->password<br>
 
 Thanks,<br>
