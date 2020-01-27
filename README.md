@@ -1,28 +1,101 @@
 # api-auth
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Travis](https://img.shields.io/travis/bitfumes/api-auth.svg?style=flat-square)]()
+[![GitHub issues](https://img.shields.io/github/issues/bitfumes/laravel-api-auth)](https://github.com/bitfumes/laravel-api-auth/issues)
 [![Total Downloads](https://img.shields.io/packagist/dt/bitfumes/api-auth.svg?style=flat-square)](https://packagist.org/packages/bitfumes/api-auth)
+[![Build Status](https://travis-ci.org/bitfumes/laravel-api-auth.svg?branch=master)](https://travis-ci.org/bitfumes/laravel-api-auth)
 
-## Install
+# Install
 
 `composer require bitfumes/api-auth`
 
-## Usage
+# Steps to follow
 
-# Add Contract hasApiAuth and JWTSubject
+## Steps 1
 
-# config auth.php
+1. Add Contract `hasApiAuth` and `JWTSubject` to your authenticatable model like shown below:
+2. Add `ApiAuth` trait to your user model.
 
-# set password attribute
+```php
 
-# add avatar field to migration
+use Bitfumes\ApiAuth\Traits\ApiAuth;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Bitfumes\ApiAuth\Contract\HasApiAuth;
 
-# run php artisan migrate
+class User extends Authenticatable implements HasApiAuth, JWTSubject
+{
+    use Notifiable, ApiAuth;
+    ...
+}
+```
 
-# Add Trait ApiAuth
+## Step 2
 
-# Add queue driver
+Configure your config/auth.php file to update guard details
+
+- Update default guard to api
+
+```php
+'defaults' => [
+        'guard'     => 'api',
+        ...
+    ],
+```
+
+- Update api guard to 'jwt'
+
+```php
+'guards' => [
+        ... ,
+
+        'api' => [
+            'driver'   => 'jwt',
+            ...
+        ],
+    ],
+```
+
+## Step 3
+
+Add new accessor to your authenticatable model
+
+```php
+public function setPasswordAttribute($value)
+{
+    $this->attributes['password'] = bcrypt($value);
+}
+```
+
+## Step 4
+
+Now publish two new migrations
+
+1.  To add avatar field to your use model.
+2.  To add social login profile.
+
+```bash
+php artisan vendor:publish --tag=api-auth:migrations
+```
+
+## Step 5
+
+After getting migrations in your laravel application, its time to have these tables in your database.
+
+```bash
+php artisan migrate
+```
+
+## Step 6
+
+Because every user need to verify its email and to send email we are going to use laravel queue.
+
+Now add queue driver on your `.env` file
+
+That's it, now enjoy api auth with JWT
+
+```
+QUEUE_DRIVER=database
+```
 
 ## Testing
 
