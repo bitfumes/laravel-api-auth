@@ -2,11 +2,8 @@
 
 namespace Bitfumes\ApiAuth\Http\Controllers;
 
-use Illuminate\Support\Str;
 use Illuminate\Routing\Controller;
 use App\Http\Resources\UserResource;
-use Bitfumes\ApiAuth\Helpers\ImageCrop;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Bitfumes\ApiAuth\Http\Requests\UpdateRequest;
 use Bitfumes\ApiAuth\Http\Requests\RegisterRequest;
@@ -38,48 +35,18 @@ class AuthController extends Controller
     public function update(UpdateRequest $request)
     {
         $user = auth()->user();
-        $this->checkForAvatar($request);
-        $user->update($request->all());
+        $user->update($request->except('avatar'));
+        $this->checkForAvatar($request, $user);
         return response([
             'data'=> new $this->resource($user),
         ], Response::HTTP_ACCEPTED);
     }
 
-    protected function checkForAvatar($request)
+    protected function checkForAvatar($request, $user)
     {
-        preg_match('/^data:(.*);base64/i', $request->avatar, $match);
-
-        if (count($match) > 0) {
-            $height   = config('api-auth.avatar.thumb_height');
-            $width    = config('api-auth.avatar.thumb_width');
-            $path     = config('api-auth.avatar.path');
-            $disk     = config('api-auth.avatar.disk');
-            $filename = Str::random();
-
-            $ImageToLoad  = str_replace('data:image/jpg;base64,', '', $request->avatar);
-            $ImageToLoad  = str_replace('data:image/png;base64,', '', $ImageToLoad);
-            $image        = base64_decode($ImageToLoad);
-
-            $this->removeOldAvatar();
-
-            Storage::disk($disk)->put("{$path}/{$filename}.jpg", $image);
-
-            $im          = imagecreatefromstring($image);
-            $thumb       = ImageCrop::crop($im, $width, $height);
-            Storage::disk($disk)->put("{$path}/{$filename}_thumb.jpg", $thumb);
-            ImageCrop::clearnUp($im);
-
-            unset($request['avatar']);
-            $request['avatar'] = "{$path}/{$filename}";
+        if ($request->has('avatar')) {
+            $user->uploadProfilePic($request->avatar);
         }
-    }
-
-    protected function removeOldAvatar()
-    {
-        $user     = auth()->user();
-        $disk     = config('api-auth.avatar.disk');
-        Storage::disk($disk)->delete("{$user->avatar}.jpg");
-        Storage::disk($disk)->delete("{$user->avatar}_thumb.jpg");
     }
 
     /**

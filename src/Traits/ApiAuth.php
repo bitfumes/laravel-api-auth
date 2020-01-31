@@ -2,7 +2,10 @@
 
 namespace Bitfumes\ApiAuth\Traits;
 
+use Illuminate\Support\Str;
 use Bitfumes\ApiAuth\SocialProfile;
+use Bitfumes\ApiAuth\Helpers\Upload;
+use Illuminate\Support\Facades\Storage;
 
 trait ApiAuth
 {
@@ -62,5 +65,22 @@ trait ApiAuth
     public function social()
     {
         return $this->hasMany(SocialProfile::class);
+    }
+
+    public function uploadProfilePic($image)
+    {
+        $path     = config('api-auth.avatar.path');
+        $disk     = config('api-auth.avatar.disk');
+        $height   = config('api-auth.avatar.thumb_height');
+        $width    = config('api-auth.avatar.thumb_width');
+
+        $filename = Str::random() . '.jpg';
+        if ($this->avatar) {
+            Storage::disk($disk)->delete($path . '/' . $this->avatar);
+        }
+        $image    = Upload::resize($image, 400);
+        $image    = Upload::resize($image, $width, $height);
+        Storage::disk($disk)->put($path . '/' . $filename, $image);
+        $this->update(['avatar' => $filename]);
     }
 }

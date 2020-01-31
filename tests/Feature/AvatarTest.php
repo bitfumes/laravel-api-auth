@@ -25,7 +25,7 @@ class AvatarTest extends TestCase
 
         $path     = config('api-auth.avatar.path');
         $disk     = config('api-auth.avatar.disk');
-        Storage::disk('public')->assertExists($user->avatar . '.jpg');
+        Storage::disk('public')->assertExists($path . '/' . $user->avatar);
 
         $this->assertEquals($user->name, json_decode($res->getContent())->data->name);
     }
@@ -44,16 +44,17 @@ class AvatarTest extends TestCase
             'avatar'  => $image,
         ]);
 
+        $path      = config('api-auth.avatar.path');
         $oldAvatar = $user->avatar;
-        Storage::disk('public')->assertExists($oldAvatar . '.jpg');
+        Storage::disk('public')->assertExists($path . '/' . $oldAvatar);
 
         $res   = $this->patchJson(route('user.update'), [
             'email'   => 'abc@def.com',
             'avatar'  => $image,
         ]);
 
-        Storage::disk('public')->assertMissing($oldAvatar . '.jpg');
-        Storage::disk('public')->assertExists($user->avatar . '.jpg');
+        Storage::disk('public')->assertMissing($path . '/' . $oldAvatar);
+        Storage::disk('public')->assertExists($path . '/' . $user->avatar);
 
         $this->assertNotNull($user->fresh()->avatar);
 
@@ -62,7 +63,7 @@ class AvatarTest extends TestCase
 
     protected function createBase64Image()
     {
-        $image = \Illuminate\Http\Testing\File::image('image.jpg');
-        return 'data:image/png;base64,' . base64_encode(file_get_contents($image));
+        $image  = \Illuminate\Http\Testing\File::image('image.jpg');
+        return base64_encode(file_get_contents($image));
     }
 }
