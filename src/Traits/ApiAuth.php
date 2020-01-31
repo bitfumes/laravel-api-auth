@@ -73,14 +73,15 @@ trait ApiAuth
         $disk     = config('api-auth.avatar.disk');
         $height   = config('api-auth.avatar.thumb_height');
         $width    = config('api-auth.avatar.thumb_width');
-
-        $filename = Str::random() . '.jpg';
+        $filename = $path . '/' . Str::random();
         if ($this->avatar) {
-            Storage::disk($disk)->delete($path . '/' . $this->avatar);
+            Storage::disk($disk)->delete("{$this->avatar}.jpg");
+            Storage::disk($disk)->delete("{$this->avatar}_thumb.jpg");
         }
-        $image    = Upload::resize($image, 400);
-        $image    = Upload::resize($image, $width, $height);
-        Storage::disk($disk)->put($path . '/' . $filename, $image);
-        $this->update(['avatar' => $filename]);
+        $big    = Upload::resize($image, 400);
+        $thumb  = Upload::resize($image, $width, $height);
+        Storage::disk($disk)->put("{$filename}.jpg", $big);
+        Storage::disk($disk)->put("{$filename}_thumb.jpg", $thumb);
+        $this->update(['avatar' => "{$filename}"]);
     }
 }

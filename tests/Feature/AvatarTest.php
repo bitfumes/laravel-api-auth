@@ -25,7 +25,7 @@ class AvatarTest extends TestCase
 
         $path     = config('api-auth.avatar.path');
         $disk     = config('api-auth.avatar.disk');
-        Storage::disk('public')->assertExists($path . '/' . $user->avatar);
+        Storage::disk('public')->assertExists("{$user->avatar}.jpg");
 
         $this->assertEquals($user->name, json_decode($res->getContent())->data->name);
     }
@@ -46,15 +46,17 @@ class AvatarTest extends TestCase
 
         $path      = config('api-auth.avatar.path');
         $oldAvatar = $user->avatar;
-        Storage::disk('public')->assertExists($path . '/' . $oldAvatar);
+        Storage::disk('public')->assertExists("{$oldAvatar}.jpg");
 
         $res   = $this->patchJson(route('user.update'), [
             'email'   => 'abc@def.com',
             'avatar'  => $image,
         ]);
 
-        Storage::disk('public')->assertMissing($path . '/' . $oldAvatar);
-        Storage::disk('public')->assertExists($path . '/' . $user->avatar);
+        Storage::disk('public')->assertMissing("{$oldAvatar}.jpg");
+        Storage::disk('public')->assertMissing("{$oldAvatar}_thumb.jpg");
+        Storage::disk('public')->assertExists("{$user->avatar}.jpg");
+        Storage::disk('public')->assertExists("{$user->avatar}_thumb.jpg");
 
         $this->assertNotNull($user->fresh()->avatar);
 

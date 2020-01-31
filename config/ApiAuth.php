@@ -17,7 +17,7 @@ return [
     ],
     'avatar' => [
         'disk'         => env('API_AUTH_AVATAR_DISK', 'public'),
-        'path'         => env('API_AUTH_AVATAR_PATH', 'avatar'),
+        'path'         => env('API_AUTH_AVATAR_PATH', 'images/avatars'),
         'thumb_width'  => env('API_AUTH_AVATAR_WIDTH', 50),
         'thumb_height' => env('API_AUTH_AVATAR_HEIGHT', 50),
     ],
