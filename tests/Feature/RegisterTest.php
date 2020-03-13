@@ -7,6 +7,7 @@ use Bitfumes\ApiAuth\Tests\TestCase;
 use Illuminate\Support\Facades\Notification;
 use Bitfumes\ApiAuth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Mail;
 
 class ExampleTest extends TestCase
 {
@@ -47,6 +48,7 @@ class ExampleTest extends TestCase
     /** @test */
     public function user_can_Verify_its_email()
     {
+        Mail::fake();
         $user = factory(User::class)->create();
         $this->postJson(route('verification.verify', $user->id));
         $this->assertNotNull($user->fresh()->email_verified_at);
