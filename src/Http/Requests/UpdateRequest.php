@@ -23,9 +23,11 @@ class UpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name'     => 'min:3|max:25',
             'email'    => 'email|unique:users,email,' . auth()->id(),
         ];
+        $custom = config('api-auth.validations');
+        return array_merge($rules, $custom);
     }
 }

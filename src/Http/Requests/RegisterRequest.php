@@ -23,10 +23,13 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name'     => 'required|min:3|max:25',
             'email'    => 'required|unique:users|email',
             'password' => 'required|confirmed|min:8',
         ];
+
+        $custom = config('api-auth.validations');
+        return array_merge($rules, $custom);
     }
 }
