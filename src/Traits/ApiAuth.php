@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait ApiAuth
 {
-    public static function bootApiAuth() : void
+    public static function bootApiAuth(): void
     {
         static::retrieved(function ($model) {
             $model->fillable = array_merge($model->fillable, ['avatar']);
@@ -60,8 +60,8 @@ trait ApiAuth
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function social()
     {
         return $this->hasMany(SocialProfile::class);

@@ -12,7 +12,7 @@ class AvatarTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUser(['avatar'=>null]);
+        $user = $this->createUser(['avatar' => null]);
         $this->actingAs($user);
         $image = $this->createBase64Image();
 
@@ -35,7 +35,7 @@ class AvatarTest extends TestCase
     {
         Storage::fake('public');
 
-        $user = $this->createUser(['avatar'=>null]);
+        $user = $this->createUser(['avatar' => null]);
         $this->actingAs($user);
         $image = $this->createBase64Image();
 

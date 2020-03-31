@@ -48,7 +48,7 @@ class SocialProfileController extends AuthController
     {
         $social   = $this->checkSocialProfile($details);
         $user     = $social ? $this->user::find($social->user_id) :
-                                $this->createSocialProfile($details, $service);
+            $this->createSocialProfile($details, $service);
         auth()->login($user);
         $token    = auth()->tokenById($user->id);
         return $this->respondWithToken($token);
@@ -90,7 +90,7 @@ class SocialProfileController extends AuthController
     protected function createUser($details)
     {
         $user                       = new $this->user();
-        $user->name                 = $details->getName();
+        $user->name                 = $details->getName() ?? $details->getEmail();
         $user->email                = $details->getEmail();
         $user->email_verified_at    = Carbon::now();
         $randomPassword             = Str::random(10);
