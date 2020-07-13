@@ -38,7 +38,7 @@ class AuthController extends Controller
         $user->update($request->except('avatar'));
         $this->checkForAvatar($request, $user);
         return response([
-            'data'=> new $this->resource($user),
+            'data' => new $this->resource($user),
         ], Response::HTTP_ACCEPTED);
     }
 
@@ -58,7 +58,7 @@ class AuthController extends Controller
     {
         $user = auth()->user();
         return response([
-            'data'=> new $this->resource($user),
+            'data' => new $this->resource($user),
         ], Response::HTTP_ACCEPTED);
     }
 
