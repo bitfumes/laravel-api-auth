@@ -40,7 +40,7 @@ return [
      * your cusom validation rules for register and update
      * this will merge with existing rules
      */
-    'validations' => [
-        //
-    ],
+    'validations' => function () {
+        return ['fumesid' =>  'max:10|unique:users,fumesid,' . auth()->id()];
+    },
 ];

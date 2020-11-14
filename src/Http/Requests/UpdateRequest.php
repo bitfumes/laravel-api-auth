@@ -28,6 +28,7 @@ class UpdateRequest extends FormRequest
             'email'    => 'email|unique:users,email,' . auth()->id(),
         ];
         $custom = config('api-auth.validations');
+        $custom = gettype($custom) === 'array' ? $custom : $custom();
         return array_merge($rules, $custom);
     }
 }
