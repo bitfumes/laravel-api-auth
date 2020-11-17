@@ -30,6 +30,7 @@ class RegisterRequest extends FormRequest
         ];
 
         $custom = config('api-auth.validations');
+        $custom = gettype($custom) === 'array' ? $custom : $custom();
         return array_merge($rules, $custom);
     }
 }
