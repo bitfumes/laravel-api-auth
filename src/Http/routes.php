@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::post('register', 'AuthController@register')->name('user.register');
 Route::post('login', 'LoginController@login')->name('user.login');
 Route::post('logout', 'LoginController@logout')->name('logout');

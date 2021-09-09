@@ -38,6 +38,7 @@ class TestCase extends BaseTestCase
         $app['config']->set('jwt.secret', 'abcdef');
 
         $app['config']->set('auth.guards.api.driver', 'jwt');
+        $app['config']->set('auth.guards.api.provider', 'users');
         $app['config']->set('auth.defaults.guard', 'api');
         $app['config']->set('auth.providers.users.model', User::class);
 
@@ -52,7 +53,7 @@ class TestCase extends BaseTestCase
 
     protected function getPackageProviders($app)
     {
-        return [ApiAuthServiceProvider::class];
+        return [ApiAuthServiceProvider::class,LaravelServiceProvider::class];
     }
 
     public function createUser($args = [], $num=null)

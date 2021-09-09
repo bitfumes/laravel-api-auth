@@ -9,7 +9,7 @@ use Bitfumes\ApiAuth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Mail;
 
-class ExampleTest extends TestCase
+class RegisterTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -83,7 +83,7 @@ class ExampleTest extends TestCase
     {
         $this->withExceptionHandling();
         $res = $this->post(route('user.register'), ['name'=>'ankur sarthak shrivastava savvy']);
-        $this->assertEquals(session('errors')->get('name')[0], 'The name may not be greater than 25 characters.');
+        $this->assertEquals(session('errors')->get('name')[0], 'The name must not be greater than 25 characters.');
     }
 
     /** @test */
