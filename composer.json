@@ -24,7 +24,7 @@
     "laravel/sanctum": "^2.11",
     "laravel/socialite": "^5.2",
     "laravel/ui": "^3.3",
-    "tymon/jwt-auth": "1.0.2"
+    "tymon/jwt-auth": "1.0.2|dev-develop"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",
