@@ -35,7 +35,7 @@ class TestCase extends BaseTestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('api-auth.models.user', User::class);
-        $app['config']->set('jwt.secret', 'abcdef');
+        $app['config']->set('jwt.secret', 'abcdefasdfasdfasdfaszsdfasdfasdfasdfasddfasdf');
 
         $app['config']->set('auth.guards.api.driver', 'jwt');
         $app['config']->set('auth.guards.api.provider', 'users');
@@ -53,15 +53,15 @@ class TestCase extends BaseTestCase
 
     protected function getPackageProviders($app)
     {
-        return [ApiAuthServiceProvider::class,LaravelServiceProvider::class];
+        return [ApiAuthServiceProvider::class, LaravelServiceProvider::class];
     }
 
-    public function createUser($args = [], $num=null)
+    public function createUser($args = [], $num = null)
     {
         return factory(User::class, $num)->create($args);
     }
 
-    public function createSocial($args = [], $num=null)
+    public function createSocial($args = [], $num = null)
     {
         return factory(SocialProfile::class, $num)->create($args);
     }
